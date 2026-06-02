@@ -2,6 +2,16 @@
 
 AI-powered cybersecurity awareness platform that helps people detect scams, phishing attempts, and online threats globally.
 
+> Cyber attacks are increasing, yet millions of people lack the tools to protect themselves. ScamRadar provides accessible, AI-driven scam detection and security awareness tools that help ordinary people stay safe online.
+
+## Screenshots
+
+### Landing Page
+![Landing Page](screenshots/landing-page.png)
+
+### Dashboard
+![Dashboard](screenshots/dashboard.png)
+
 ## Features
 - Scam message checker
 - Phishing link detector
@@ -18,8 +28,8 @@ AI-powered cybersecurity awareness platform that helps people detect scams, phis
 
 ## Roadmap
 - [x] Phase 1 - Repo structure + README
-- [ ] Phase 2 - Landing page
-- [ ] Phase 3 - React dashboard
+- [x] Phase 2 - Landing page
+- [x] Phase 3 - React dashboard
 - [ ] Phase 4 - Python backend + AI integration
 - [ ] Phase 5 - Connect frontend to backend
 - [ ] Phase 6 - Cloud deployment
