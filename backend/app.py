@@ -84,5 +84,5 @@ Only respond with the JSON object, nothing else."""
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    port = int(os.getenv("FLASK_PORT", 5000))
-    app.run(debug=True, port=port)
+    port = int(os.getenv("PORT", os.getenv("FLASK_PORT", 5000)))
+    app.run(debug=False, host="0.0.0.0", port=port)
