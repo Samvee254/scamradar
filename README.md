@@ -4,6 +4,10 @@ AI-powered cybersecurity awareness platform that helps people detect scams, phis
 
 > Cyber attacks are increasing, yet millions of people lack the tools to protect themselves. ScamRadar provides accessible, AI-driven scam detection and security awareness tools that help ordinary people stay safe online.
 
+## Live Demo
+- Frontend: https://scamradar-xi.vercel.app
+- Backend API: https://scamradar-s1i1.onrender.com
+
 ## Screenshots
 
 ### Landing Page
@@ -35,7 +39,7 @@ AI-powered cybersecurity awareness platform that helps people detect scams, phis
 - [x] Phase 3 - React dashboard
 - [x] Phase 4 - Python backend + AI integration
 - [x] Phase 5 - Connect frontend to backend
-- [ ] Phase 6 - Cloud deployment
+- [x] Phase 6 - Cloud deployment
 
 ## License
 MIT
