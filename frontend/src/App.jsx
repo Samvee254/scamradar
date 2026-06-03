@@ -6,22 +6,30 @@ function App() {
   const [input, setInput] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleScan = () => {
+  const handleScan = async () => {
     if (!input.trim()) return;
     setLoading(true);
     setResult(null);
-    setTimeout(() => {
-      const lower = input.toLowerCase();
-      if (lower.includes("won") || lower.includes("claim") || lower.includes("urgent") || lower.includes("verify") || lower.includes("pin") || lower.includes("password")) {
-        setResult({ status: "danger", message: "High risk — likely a scam!", tip: "Do not click any links or share personal information." });
-      } else if (lower.includes("offer") || lower.includes("free") || lower.includes("limited")) {
-        setResult({ status: "warning", message: "Suspicious — proceed with caution.", tip: "Verify the sender before taking any action." });
+    setError(null);
+
+    try {
+      const response = await fetch("http://127.0.0.1:5000/api/scan", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: input, type: activeTab }),
+      });
+      const data = await response.json();
+      if (data.error) {
+        setError(data.error);
       } else {
-        setResult({ status: "safe", message: "Looks safe — no threats detected.", tip: "Always stay alert even with messages that seem safe." });
+        setResult(data);
       }
-      setLoading(false);
-    }, 1500);
+    } catch (err) {
+      setError("Could not connect to server. Make sure the backend is running.");
+    }
+    setLoading(false);
   };
 
   return (
@@ -38,9 +46,9 @@ function App() {
 
       <div className="main">
         <div className="tabs">
-          <button className={activeTab === "scam" ? "tab active" : "tab"} onClick={() => { setActiveTab("scam"); setResult(null); setInput(""); }}>Scam Checker</button>
-          <button className={activeTab === "phishing" ? "tab active" : "tab"} onClick={() => { setActiveTab("phishing"); setResult(null); setInput(""); }}>Phishing Detector</button>
-          <button className={activeTab === "password" ? "tab active" : "tab"} onClick={() => { setActiveTab("password"); setResult(null); setInput(""); }}>Password Health</button>
+          <button className={activeTab === "scam" ? "tab active" : "tab"} onClick={() => { setActiveTab("scam"); setResult(null); setInput(""); setError(null); }}>Scam Checker</button>
+          <button className={activeTab === "phishing" ? "tab active" : "tab"} onClick={() => { setActiveTab("phishing"); setResult(null); setInput(""); setError(null); }}>Phishing Detector</button>
+          <button className={activeTab === "password" ? "tab active" : "tab"} onClick={() => { setActiveTab("password"); setResult(null); setInput(""); setError(null); }}>Password Health</button>
         </div>
 
         <div className="scan-box">
@@ -52,16 +60,29 @@ function App() {
             onChange={(e) => setInput(e.target.value)}
           />
           <button className="scan-btn" onClick={handleScan} disabled={loading}>
-            {loading ? "Analyzing..." : "Scan Now"}
+            {loading ? "Analyzing with AI..." : "Scan Now"}
           </button>
         </div>
 
+        {error && (
+          <div className="result-card danger">
+            <div className="result-icon">❌</div>
+            <div>
+              <div className="result-message">Error</div>
+              <div className="result-tip">{error}</div>
+            </div>
+          </div>
+        )}
+
         {result && (
           <div className={"result-card " + result.status}>
-            <div className="result-icon">{result.status === "danger" ? "🚨" : result.status === "warning" ? "⚠️" : "✅"}</div>
+            <div className="result-icon">
+              {result.status === "danger" ? "🚨" : result.status === "warning" ? "⚠️" : "✅"}
+            </div>
             <div>
               <div className="result-message">{result.message}</div>
               <div className="result-tip">{result.tip}</div>
+              {result.confidence && <div className="result-tip">Confidence: {result.confidence}</div>}
             </div>
           </div>
         )}

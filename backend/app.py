@@ -4,7 +4,7 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 import anthropic
 
-load_dotenv()
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '..', '.env'))
 
 app = Flask(__name__)
 CORS(app)
@@ -68,12 +68,17 @@ Only respond with the JSON object, nothing else."""
 
     try:
         response = client.messages.create(
-            model="claude-sonnet-4-20250514",
+            model="claude-haiku-4-5-20251001",
             max_tokens=1000,
             messages=[{"role": "user", "content": prompt}]
         )
         import json
-        result = json.loads(response.content[0].text)
+        raw = response.content[0].text.strip()
+        if raw.startswith("```"):
+            raw = raw.split("```")[1]
+            if raw.startswith("json"):
+                raw = raw[4:]
+        result = json.loads(raw.strip())
         return jsonify(result)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
