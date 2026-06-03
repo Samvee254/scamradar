@@ -12,6 +12,9 @@ AI-powered cybersecurity awareness platform that helps people detect scams, phis
 ### Dashboard
 ![Dashboard](screenshots/dashboard.png)
 
+### AI Detection in Action
+![AI Detection](screenshots/ai-detection-working.png)
+
 ## Features
 - Scam message checker
 - Phishing link detector
@@ -30,8 +33,8 @@ AI-powered cybersecurity awareness platform that helps people detect scams, phis
 - [x] Phase 1 - Repo structure + README
 - [x] Phase 2 - Landing page
 - [x] Phase 3 - React dashboard
-- [ ] Phase 4 - Python backend + AI integration
-- [ ] Phase 5 - Connect frontend to backend
+- [x] Phase 4 - Python backend + AI integration
+- [x] Phase 5 - Connect frontend to backend
 - [ ] Phase 6 - Cloud deployment
 
 ## License
